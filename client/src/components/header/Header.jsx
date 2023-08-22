@@ -42,7 +42,7 @@ export const Header = () => {
             ref={containerRef}
             onClick={() => setIsOpen(!isOpen)}
             successedUser={successedUser}
-            isAsk={location.pathname}
+            path={location.pathname}
           >
             <Hamburger isOpen={isOpen} />
           </HeaderHamburgerBox>
@@ -131,11 +131,17 @@ const HeaderHamburgerBox = styled.div`
     background-color: #e4e6e8;
   }
 
-  ${({ successedUser, isAsk }) =>
-    successedUser &&
-    css`
-      display: ${({ isAsk }) => (isAsk === '/ask' ? 'flex' : 'none')};
-    `}
+  ${({ successedUser, path }) => css`
+    display: ${({ path, successedUser }) =>
+      successedUser && path === '/ask'
+        ? 'flex'
+        : path === '/login' || path === '/signup'
+        ? 'flex'
+        : 'none'};
+  `}
+
+  /* display: ${({ successedUser, path }) =>
+    !successedUser && path === '/questions' && 'none'}; */
 
   @media (max-width: 816px) {
     display: flex;
